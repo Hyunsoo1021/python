@@ -111,13 +111,6 @@ def draw_x():
 numbs = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
-def is_numbs_full(numbs):
-    for i in range(0, 9):
-        for j in range(1, 10):
-            if numbs[i] == j:
-                return False
-    return True
-
 
 def nanido_easy_ai():
     global numbs
@@ -166,309 +159,107 @@ def nanido_easy_ai():
         return
 
 
+def possible_bingo_line(numbs):
+    bingo_list = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    for bingo in bingo_list:
+        a, b, c = bingo
+        o_list, x_list, n_list = [], [], []
+        for i in bingo:
+            if numbs[i] == "o":
+                o_list.append(i)
+            elif numbs[i] == "x":
+                x_list.append(i)
+            else:
+                n_list.append(i)
+        if len(o_list) == 2 and len(n_list) == 1:
+            return n_list[0]
+    return -1
+
+
+def block_bingo_line(numbs):
+    bingo_list = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    for bingo in bingo_list:
+        a, b, c = bingo
+        o_list, x_list, n_list = [], [], []
+        for i in bingo:
+            if numbs[i] == "o":
+                o_list.append(i)
+            elif numbs[i] == "x":
+                x_list.append(i)
+            else:
+                n_list.append(i)
+        if len(x_list) == 2 and len(n_list) == 1:
+            return n_list[0]
+    return -1
+
+
+def find_bingo(numbs, delimeter):
+    bingo_list = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    for bingo in bingo_list:
+        a, b, c = bingo
+        if numbs[a] == numbs[b] == numbs[c] == delimeter:
+            return True
+    return False
+
+
+def is_numbs_full(numbs):
+    for i in range(0, 9):
+        if numbs[i] != "o" and numbs[i] != "x":
+            return False
+    return True
+
+
 def nanido_hard_ai():
     global numbs
-    random_ai = random.randint(1, 9)
-    while random_ai not in numbs:
-        random_ai = random.randint(1, 9)
+    print(numbs)
+
+    # 1. user가 모서리 선택 -> ai가 가운데 자리 선택
     if (numbs[4] == 5) and (numbs[0] == "x" or numbs[2] == "x" or numbs[6] == "x" or numbs[8] == "x"):
         penup()
         goto(0, 0)
         draw_o()
         numbs[4] = "o"
+    # 2. 이번에 빙고를 만들 수 있는 칸 찾기
     else:
-        if numbs[0] == "o" and numbs[1] == "o" and numbs[2] == 3:
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        elif numbs[0] == "o" and numbs[1] == 2 and numbs[2] == "o":
-            penup()
-            goto(0, 200)
-            draw_o()
-            numbs[1] = "o"
-        elif numbs[0] == 1 and numbs[1] == "o" and numbs[2] == "o":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[3] == "o" and numbs[4] == "o" and numbs[5] == 6:
-            penup()
-            goto(200, 0)
-            draw_o()
-            numbs[5] = "o"
-        elif numbs[3] == "o" and numbs[4] == 5 and numbs[5] == "o":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[3] == 4 and numbs[4] == "o" and numbs[5] == "o":
-            penup()
-            goto(-200, 0)
-            draw_o()
-            numbs[3] = "o"
-        elif numbs[6] == "o" and numbs[7] == "o" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[6] == "o" and numbs[7] == 8 and numbs[8] == "o":
-            penup()
-            goto(0, -200)
-            draw_o()
-            numbs[7] = "o"
-        elif numbs[6] == 7 and numbs[7] == "o" and numbs[8] == "o":
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[0] == "o" and numbs[3] == "o" and numbs[6] == 7:
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[0] == "o" and numbs[3] == 4 and numbs[6] == "o":
-            penup()
-            goto(-200, 0)
-            draw_o()
-            numbs[3] = "o"
-        elif numbs[0] == 1 and numbs[3] == "o" and numbs[6] == "o":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[1] == "o" and numbs[4] == "o" and numbs[7] == 8:
-            penup()
-            goto(0, -200)
-            draw_o()
-            numbs[7] = "o"
-        elif numbs[1] == "o" and numbs[4] == 5 and numbs[7] == "o":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[1] == 2 and numbs[4] == "o" and numbs[7] == "o":
-            penup()
-            goto(0, 200)
-            draw_o()
-            numbs[1] = "o"
-        elif numbs[2] == "o" and numbs[5] == "o" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[2] == "o" and numbs[5] == 6 and numbs[8] == "o":
-            penup()
-            goto(200, 0)
-            draw_o()
-            numbs[5] = "o"
-        elif numbs[2] == 3 and numbs[5] == "o" and numbs[8] == "o":
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        elif numbs[0] == "o" and numbs[4] == "o" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[0] == "o" and numbs[4] == 5 and numbs[8] == "o":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[0] == 1 and numbs[4] == "o" and numbs[8] == "o":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[2] == "o" and numbs[4] == "o" and numbs[6] == 7:
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[2] == "o" and numbs[4] == 5 and numbs[6] == "o":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[2] == 3 and numbs[4] == "o" and numbs[6] == "o":
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        elif numbs[0] == "x" and numbs[1] == "x" and numbs[2] == 3:
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        elif numbs[0] == "x" and numbs[1] == 2 and numbs[2] == "x":
-            penup()
-            goto(0, 200)
-            draw_o()
-            numbs[1] = "o"
-        elif numbs[0] == 1 and numbs[1] == "x" and numbs[2] == "x":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[3] == "x" and numbs[4] == "x" and numbs[5] == 6:
-            penup()
-            goto(200, 0)
-            draw_o()
-            numbs[5] = "o"
-        elif numbs[3] == "x" and numbs[4] == 5 and numbs[5] == "x":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[3] == 4 and numbs[4] == "x" and numbs[5] == "x":
-            penup()
-            goto(-200, 0)
-            draw_o()
-            numbs[3] = "o"
-        elif numbs[6] == "x" and numbs[7] == "x" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[6] == "x" and numbs[7] == 8 and numbs[8] == "x":
-            penup()
-            goto(0, -200)
-            draw_o()
-            numbs[7] = "o"
-        elif numbs[6] == 7 and numbs[7] == "x" and numbs[8] == "x":
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[0] == "x" and numbs[3] == "x" and numbs[6] == 7:
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[0] == "x" and numbs[3] == 4 and numbs[6] == "x":
-            penup()
-            goto(-200, 0)
-            draw_o()
-            numbs[3] = "o"
-        elif numbs[0] == 1 and numbs[3] == "x" and numbs[6] == "x":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[1] == "x" and numbs[4] == "x" and numbs[7] == 8:
-            penup()
-            goto(0, -200)
-            draw_o()
-            numbs[7] = "o"
-        elif numbs[1] == "x" and numbs[4] == 5 and numbs[7] == "x":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[1] == 2 and numbs[4] == "x" and numbs[7] == "x":
-            penup()
-            goto(0, 200)
-            draw_o()
-            numbs[1] = "o"
-        elif numbs[2] == "x" and numbs[5] == "x" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[2] == "x" and numbs[5] == 6 and numbs[8] == "x":
-            penup()
-            goto(200, 0)
-            draw_o()
-            numbs[5] = "o"
-        elif numbs[2] == 3 and numbs[5] == "x" and numbs[8] == "x":
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        elif numbs[0] == "x" and numbs[4] == "x" and numbs[8] == 9:
-            penup()
-            goto(200, -200)
-            draw_o()
-            numbs[8] = "o"
-        elif numbs[0] == "x" and numbs[4] == 5 and numbs[8] == "x":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[0] == 1 and numbs[4] == "x" and numbs[8] == "x":
-            penup()
-            goto(-200, 200)
-            draw_o()
-            numbs[0] = "o"
-        elif numbs[2] == "x" and numbs[4] == "x" and numbs[6] == 7:
-            penup()
-            goto(-200, -200)
-            draw_o()
-            numbs[6] = "o"
-        elif numbs[2] == "x" and numbs[4] == 5 and numbs[6] == "x":
-            penup()
-            goto(0, 0)
-            draw_o()
-            numbs[4] = "o"
-        elif numbs[2] == 3 and numbs[4] == "x" and numbs[6] == "x":
-            penup()
-            goto(200, 200)
-            draw_o()
-            numbs[2] = "o"
-        else:
-            if random_ai == 1:
-                penup()
-                goto(-200, 200)
-            elif random_ai == 2:
-                penup()
-                goto(0, 200)
-            elif random_ai == 3:
-                penup()
-                goto(200, 200)
-            elif random_ai == 4:
-                penup()
-                goto(-200, 0)
-            elif random_ai == 5:
-                penup()
-                goto(0, 0)
-            elif random_ai == 6:
-                penup()
-                goto(200, 0)
-            elif random_ai == 7:
-                penup()
-                goto(-200, -200)
-            elif random_ai == 8:
-                penup()
-                goto(0, -200)
-            else:
-                penup()
-                goto(200, -200)
-            draw_o()
-        if is_numbs_full(numbs):
+        # 빙고를 만들 수 있는 칸이 있는 경우(bn != -1)
+        bn = possible_bingo_line(numbs)
+        if bn == -1:
+            # 빙고를 만들 수 있는 칸이 없는 경우(bn == -1) 상대방의 빙고를 방어:
+            bn = block_bingo_line(numbs)
+            if bn == -1:
+                random_ai = random.randint(1, 9)
+                while random_ai not in numbs:
+                    random_ai = random.randint(1, 9)
+                bn = numbs.index(random_ai)
+        # 선택할 자리에 'o' 그리기
+        numbs[bn] = "o"
+        """
+        0 1(0,1) 2(1,1)
+        3 4(0,0) 5(1,0)
+        6 7(0,-1) 8(1,-1)
+        """
+        a, b = bn % 3 - 1, 1 - (bn // 3)
+        penup()
+        goto(200 * a, 200 * b)
+        draw_o()
+        # 빙고가 생겼는지 찾기
+        if find_bingo(numbs, "o"):
+            time.sleep(1)
             reset()
+            print('당신은 패배하였습니다')
             penup()
-            print("당신은 ai와의 대결에서 비겼습니다.")
-            write("당신은 ai와의 대결에서 비겼습니다.", True, align="center", font=('이서윤체', 40, 'normal'))
+            write("당신은 패배하였습니다", True, align="center", font=('이서윤체', 40, 'normal'))
             return
-        else:
-            print("게임을 계속합니다")
-    finding = numbs.index(random_ai)
-    penup()
-    numbs[finding] = 'o'
-    if numbs[0:3] == ['o', 'o', 'o'] or numbs[3:6] == ['o', 'o', 'o'] \
-            or numbs[6:9] == ['o', 'o', 'o'] or [numbs[0], numbs[3], numbs[6]] == ['o', 'o', 'o'] \
-            or [numbs[1], numbs[4], numbs[7]] == ['o', 'o', 'o'] or [numbs[2], numbs[5], numbs[8]] == ['o', 'o',
-                                                                                                       'o'] \
-            or [numbs[0], numbs[4], numbs[8]] == ['o', 'o', 'o'] or [numbs[2], numbs[4], numbs[6]] == ['o', 'o',
-                                                                                                       'o']:
+    if is_numbs_full(numbs):
         time.sleep(1)
         reset()
-        print('당신은 패배하였습니다')
+        print("당신은 ai와의 대결에서 비겼습니다.")
         penup()
-        write("당신은 패배하였습니다", True, align="center", font=('이서윤체', 40, 'normal'))
+        write("당신은 ai와의 대결에서 비겼습니다.", True, align="center", font=('이서윤체', 40, 'normal'))
         return
+    else:
+        print("게임을 계속합니다")
+
 
 
 def nanido_easy():
@@ -667,192 +458,51 @@ def nanido_hard():
 
     def show(x, y):
         global numbs
-        if x >= -300 and x <= -100 and y >= 100 and y <= 300:
-            if 1 in numbs:
-                print(1)
-                finding = numbs.index(1)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(-200, 200)
-                draw_x()
-                nanido_hard_ai()
 
-            else:
-                pass
-        elif x >= -100 and x <= 100 and y >= 100 and y <= 300:
-            if 2 in numbs:
-                print(2)
-                finding = numbs.index(2)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
+        x = int((x+300) // 200)
+        y = int(2 - (y+300) // 200)
+        bn = y*3 + x
+        print(x, y, bn)
+
+        # 빈 자리를 선택했을 때
+        if numbs[bn] != "o" and numbs[bn] != "x":
+            numbs[bn] = 'x'
+            """
+            0 1(0,1) 2(1,1)
+            3 4(0,0) 5(1,0)
+            6 7(0,-1) 8(1,-1)
+            """
+            a, b = bn % 3 - 1, 1 - (bn // 3)
+            penup()
+            goto(200 * a, 200 * b)
+            draw_x()
+
+            # 빙고가 생겼을 때
+            if find_bingo(numbs, "x"):
+                time.sleep(1)
+                reset()
+                print('당신은 승리하였습니다')
                 penup()
-                goto(0, 200)
-                draw_x()
-                nanido_hard_ai()
+                write("당신은 승리하였습니다", True, align="center", font=('이서윤체', 40, 'normal'))
+                return
+            # 빙고가 안 생겼을 때
             else:
-                pass
-        elif x >= 100 and x <= 300 and y >= 100 and y <= 300:
-            if 3 in numbs:
-                print(3)
-                finding = numbs.index(3)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
+                if is_numbs_full(numbs):
+                    time.sleep(1)
                     reset()
-                    print('당신이 승리하셨습니다')
+                    print("당신은 ai와의 대결에서 비겼습니다.")
                     penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
+                    write("당신은 ai와의 대결에서 비겼습니다.", True, align="center", font=('이서윤체', 40, 'normal'))
                     return
-                penup()
-                goto(200, 200)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= -300 and x <= -100 and y >= -100 and y <= 100:
-            if 4 in numbs:
-                print(4)
-                finding = numbs.index(4)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(-200, 0)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= -100 and x <= 100 and y >= -100 and y <= 100:
-            if 5 in numbs:
-                print(5)
-                finding = numbs.index(5)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(0, 0)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= 100 and x <= 300 and y >= -100 and y <= 100:
-            if 6 in numbs:
-                print(6)
-                finding = numbs.index(6)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(200, 0)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= -300 and x <= -100 and y >= -300 and y <= -100:
-            if 7 in numbs:
-                print(7)
-                finding = numbs.index(7)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(-200, -200)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= -100 and x <= 100 and y >= -300 and y <= -100:
-            if 8 in numbs:
-                print(8)
-                finding = numbs.index(8)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(0, -200)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
-        elif x >= 100 and x <= 300 and y >= -300 and y <= -100:
-            if 9 in numbs:
-                print(9)
-                finding = numbs.index(9)
-                numbs[finding] = 'x'
-                if numbs[0:3] == ['x', 'x', 'x'] or numbs[3:6] == ['x', 'x', 'x'] \
-                        or numbs[6:9] == ['x', 'x', 'x'] or [numbs[0], numbs[3], numbs[6]] == ['x', 'x', 'x'] \
-                        or [numbs[1], numbs[4], numbs[7]] == ['x', 'x', 'x'] or [numbs[2], numbs[5], numbs[8]] == ['x','x','x'] \
-                        or [numbs[0], numbs[4], numbs[8]] == ['x', 'x', 'x'] or [numbs[2], numbs[4], numbs[6]] == ['x','x','x']:
-                    reset()
-                    print('당신이 승리하셨습니다')
-                    penup()
-                    write("당신이 승리하셨습니다. 축하합니다!", True, align="center", font=('이서윤체', 40, 'normal'))
-                    return
-                penup()
-                goto(200, -200)
-                draw_x()
-                nanido_hard_ai()
-            else:
-                pass
+                else:
+                    print("게임을 계속합니다")
+                    nanido_hard_ai()
+
+        # 이미 선택한 칸을 다시 골랐을 때
         else:
             pass
+
         print(x, y)
-
     onscreenclick(show)
-
 
 done()

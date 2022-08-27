@@ -119,8 +119,6 @@ def is_numbs_full(numbs):
     return True
 
 
-
-
 def nanido_easy_ai():
     global numbs
     if is_numbs_full(numbs):
@@ -170,9 +168,307 @@ def nanido_easy_ai():
 
 def nanido_hard_ai():
     global numbs
-    #if numbs == [1]
-
-
+    random_ai = random.randint(1, 9)
+    while random_ai not in numbs:
+        random_ai = random.randint(1, 9)
+    if (numbs[4] == 5) and (numbs[0] == "x" or numbs[2] == "x" or numbs[6] == "x" or numbs[8] == "x"):
+        penup()
+        goto(0, 0)
+        draw_o()
+        numbs[4] = "o"
+    else:
+        if numbs[0] == "o" and numbs[1] == "o" and numbs[2] == 3:
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        elif numbs[0] == "o" and numbs[1] == 2 and numbs[2] == "o":
+            penup()
+            goto(0, 200)
+            draw_o()
+            numbs[1] = "o"
+        elif numbs[0] == 1 and numbs[1] == "o" and numbs[2] == "o":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[3] == "o" and numbs[4] == "o" and numbs[5] == 6:
+            penup()
+            goto(200, 0)
+            draw_o()
+            numbs[5] = "o"
+        elif numbs[3] == "o" and numbs[4] == 5 and numbs[5] == "o":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[3] == 4 and numbs[4] == "o" and numbs[5] == "o":
+            penup()
+            goto(-200, 0)
+            draw_o()
+            numbs[3] = "o"
+        elif numbs[6] == "o" and numbs[7] == "o" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[6] == "o" and numbs[7] == 8 and numbs[8] == "o":
+            penup()
+            goto(0, -200)
+            draw_o()
+            numbs[7] = "o"
+        elif numbs[6] == 7 and numbs[7] == "o" and numbs[8] == "o":
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[0] == "o" and numbs[3] == "o" and numbs[6] == 7:
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[0] == "o" and numbs[3] == 4 and numbs[6] == "o":
+            penup()
+            goto(-200, 0)
+            draw_o()
+            numbs[3] = "o"
+        elif numbs[0] == 1 and numbs[3] == "o" and numbs[6] == "o":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[1] == "o" and numbs[4] == "o" and numbs[7] == 8:
+            penup()
+            goto(0, -200)
+            draw_o()
+            numbs[7] = "o"
+        elif numbs[1] == "o" and numbs[4] == 5 and numbs[7] == "o":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[1] == 2 and numbs[4] == "o" and numbs[7] == "o":
+            penup()
+            goto(0, 200)
+            draw_o()
+            numbs[1] = "o"
+        elif numbs[2] == "o" and numbs[5] == "o" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[2] == "o" and numbs[5] == 6 and numbs[8] == "o":
+            penup()
+            goto(200, 0)
+            draw_o()
+            numbs[5] = "o"
+        elif numbs[2] == 3 and numbs[5] == "o" and numbs[8] == "o":
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        elif numbs[0] == "o" and numbs[4] == "o" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[0] == "o" and numbs[4] == 5 and numbs[8] == "o":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[0] == 1 and numbs[4] == "o" and numbs[8] == "o":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[2] == "o" and numbs[4] == "o" and numbs[6] == 7:
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[2] == "o" and numbs[4] == 5 and numbs[6] == "o":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[2] == 3 and numbs[4] == "o" and numbs[6] == "o":
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        elif numbs[0] == "x" and numbs[1] == "x" and numbs[2] == 3:
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        elif numbs[0] == "x" and numbs[1] == 2 and numbs[2] == "x":
+            penup()
+            goto(0, 200)
+            draw_o()
+            numbs[1] = "o"
+        elif numbs[0] == 1 and numbs[1] == "x" and numbs[2] == "x":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[3] == "x" and numbs[4] == "x" and numbs[5] == 6:
+            penup()
+            goto(200, 0)
+            draw_o()
+            numbs[5] = "o"
+        elif numbs[3] == "x" and numbs[4] == 5 and numbs[5] == "x":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[3] == 4 and numbs[4] == "x" and numbs[5] == "x":
+            penup()
+            goto(-200, 0)
+            draw_o()
+            numbs[3] = "o"
+        elif numbs[6] == "x" and numbs[7] == "x" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[6] == "x" and numbs[7] == 8 and numbs[8] == "x":
+            penup()
+            goto(0, -200)
+            draw_o()
+            numbs[7] = "o"
+        elif numbs[6] == 7 and numbs[7] == "x" and numbs[8] == "x":
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[0] == "x" and numbs[3] == "x" and numbs[6] == 7:
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[0] == "x" and numbs[3] == 4 and numbs[6] == "x":
+            penup()
+            goto(-200, 0)
+            draw_o()
+            numbs[3] = "o"
+        elif numbs[0] == 1 and numbs[3] == "x" and numbs[6] == "x":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[1] == "x" and numbs[4] == "x" and numbs[7] == 8:
+            penup()
+            goto(0, -200)
+            draw_o()
+            numbs[7] = "o"
+        elif numbs[1] == "x" and numbs[4] == 5 and numbs[7] == "x":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[1] == 2 and numbs[4] == "x" and numbs[7] == "x":
+            penup()
+            goto(0, 200)
+            draw_o()
+            numbs[1] = "o"
+        elif numbs[2] == "x" and numbs[5] == "x" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[2] == "x" and numbs[5] == 6 and numbs[8] == "x":
+            penup()
+            goto(200, 0)
+            draw_o()
+            numbs[5] = "o"
+        elif numbs[2] == 3 and numbs[5] == "x" and numbs[8] == "x":
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        elif numbs[0] == "x" and numbs[4] == "x" and numbs[8] == 9:
+            penup()
+            goto(200, -200)
+            draw_o()
+            numbs[8] = "o"
+        elif numbs[0] == "x" and numbs[4] == 5 and numbs[8] == "x":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[0] == 1 and numbs[4] == "x" and numbs[8] == "x":
+            penup()
+            goto(-200, 200)
+            draw_o()
+            numbs[0] = "o"
+        elif numbs[2] == "x" and numbs[4] == "x" and numbs[6] == 7:
+            penup()
+            goto(-200, -200)
+            draw_o()
+            numbs[6] = "o"
+        elif numbs[2] == "x" and numbs[4] == 5 and numbs[6] == "x":
+            penup()
+            goto(0, 0)
+            draw_o()
+            numbs[4] = "o"
+        elif numbs[2] == 3 and numbs[4] == "x" and numbs[6] == "x":
+            penup()
+            goto(200, 200)
+            draw_o()
+            numbs[2] = "o"
+        else:
+            if random_ai == 1:
+                penup()
+                goto(-200, 200)
+            elif random_ai == 2:
+                penup()
+                goto(0, 200)
+            elif random_ai == 3:
+                penup()
+                goto(200, 200)
+            elif random_ai == 4:
+                penup()
+                goto(-200, 0)
+            elif random_ai == 5:
+                penup()
+                goto(0, 0)
+            elif random_ai == 6:
+                penup()
+                goto(200, 0)
+            elif random_ai == 7:
+                penup()
+                goto(-200, -200)
+            elif random_ai == 8:
+                penup()
+                goto(0, -200)
+            else:
+                penup()
+                goto(200, -200)
+            draw_o()
+        if is_numbs_full(numbs):
+            reset()
+            penup()
+            print("당신은 ai와의 대결에서 비겼습니다.")
+            write("당신은 ai와의 대결에서 비겼습니다.", True, align="center", font=('이서윤체', 40, 'normal'))
+            return
+        else:
+            print("게임을 계속합니다")
+    finding = numbs.index(random_ai)
+    penup()
+    numbs[finding] = 'o'
+    if numbs[0:3] == ['o', 'o', 'o'] or numbs[3:6] == ['o', 'o', 'o'] \
+            or numbs[6:9] == ['o', 'o', 'o'] or [numbs[0], numbs[3], numbs[6]] == ['o', 'o', 'o'] \
+            or [numbs[1], numbs[4], numbs[7]] == ['o', 'o', 'o'] or [numbs[2], numbs[5], numbs[8]] == ['o', 'o',
+                                                                                                       'o'] \
+            or [numbs[0], numbs[4], numbs[8]] == ['o', 'o', 'o'] or [numbs[2], numbs[4], numbs[6]] == ['o', 'o',
+                                                                                                       'o']:
+        time.sleep(1)
+        reset()
+        print('당신은 패배하였습니다')
+        penup()
+        write("당신은 패배하였습니다", True, align="center", font=('이서윤체', 40, 'normal'))
+        return
 
 
 def nanido_easy():
@@ -364,8 +660,8 @@ def nanido_easy():
             pass
         print(x, y)
     onscreenclick(show)
-    
-    
+
+
 def nanido_hard():
     make()
 

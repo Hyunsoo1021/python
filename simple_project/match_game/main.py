@@ -4,6 +4,8 @@ import time
 
 title("성냥개비 게임")
 num_of_matches = 0
+length_of_match = 150
+click_time = 0
 
 def explain():
     speed(0)
@@ -133,6 +135,7 @@ def show_random():
 
 
 def draw_match(x, y):
+    global length_of_match
     color(193, 61, 44)
     goto(x, y)
     pensize(8)
@@ -142,10 +145,13 @@ def draw_match(x, y):
     color(247, 219, 171)
     goto(x, y-15)
     pendown()
-    goto(x, y-150)
+    goto(x, y-length_of_match)
     penup()
+    return [x, y]
+
 
 def first_draw_match(x):
+    t = []
     colormode(255)
     cur_length = -350
     num = 0
@@ -159,10 +165,12 @@ def first_draw_match(x):
             cur_length += (length // 2)
         else:
             cur_length += length
-        draw_match(cur_length, 250)
+        t.append(draw_match(cur_length, 250))
+    return t
 
 
 def second_draw_match(x):
+    t = []
     colormode(255)
     cur_length = -350
     num = 0
@@ -173,7 +181,8 @@ def second_draw_match(x):
             cur_length += (length // 2)
         else:
             cur_length += length
-        draw_match(cur_length, 50)
+        t.append(draw_match(cur_length, 50))
+    return t
 
 
 def game_screen():
@@ -183,8 +192,83 @@ def game_screen():
     showturtle()
     goto(0, 0)
     pensize(4)
-    first_draw_match(num_of_matches)
-    second_draw_match(num_of_matches)
+    first_match_pos = first_draw_match(num_of_matches)
+    second_match_pos = second_draw_match(num_of_matches)
+    print(first_match_pos)
+    print(second_match_pos)
+
+    color(0, 0, 0)
+    goto(-125, -150)
+    pendown()
+    pensize(4)
+    seth(270)
+    fd(100)
+    seth(0)
+    fd(200)
+    seth(90)
+    fd(100)
+    seth(180)
+    fd(200)
+    penup()
+    seth(270)
+    fd(75)
+    seth(0)
+    fd(100)
+    write("확인", False, align="center", font=('이서윤체', 40, 'normal'))
+
+    ON = 1
+    OFF = 0
+    match_status = []
+    first_width = (first_match_pos[1][0] - first_match_pos[0][0]) // 2
+    second_width = (second_match_pos[1][0] - second_match_pos[0][0]) // 2
+    for k in range(len(first_match_pos) + len(second_match_pos)):
+        match_status.append(ON)
+
+    def game_screen_button(x, y):
+        global click_time
+        print(x, y)
+
+        if -125 <= x <= 75 and -250 <= y <= -150:
+            click_time = 0
+
+        elif click_time >= 3:
+            print('더 이상 선택할 수 없습니다.')
+        else:
+
+            for i in range(len(first_match_pos)):
+                match_x = first_match_pos[i][0]
+                if match_x - first_width <= x <= match_x + first_width and 100 <= y <= 250:
+                    pensize(8)
+                    penup()
+                    goto(first_match_pos[i][0], first_match_pos[i][1])
+                    color(255, 255, 255)
+                    seth(270)
+                    pendown()
+                    fd(150)
+                    penup()
+                    match_status[i] = OFF
+                    click_time += 1
+            for j in range(len(second_match_pos)):
+                match_x = second_match_pos[j][0]
+                if match_x - second_width <= x <= match_x + second_width and -100 <= y <= 50:
+                    pensize(8)
+                    penup()
+                    goto(second_match_pos[j][0], second_match_pos[j][1])
+                    color(255, 255, 255)
+                    seth(270)
+                    pendown()
+                    fd(150)
+                    penup()
+                    if (len(first_match_pos) + len(second_match_pos)) % 2 == 0:
+                        match_status[(len(first_match_pos) + len(second_match_pos)) // 2 + j] = OFF
+                    else:
+                        match_status[(len(first_match_pos) + len(second_match_pos)) // 2 + 1 + j] = OFF
+                    click_time += 1
+
+                # AI def 만들기
+        print(match_status)
+        print(click_time)
+    onscreenclick(game_screen_button)
 
 
 done()

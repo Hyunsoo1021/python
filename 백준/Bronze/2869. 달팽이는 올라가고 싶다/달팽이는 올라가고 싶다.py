@@ -1,10 +1,6 @@
-a, b, c = map(int, input().split())
-up = a - b
-left = c - a
-time = 1
-left /= up
-if left % 1 != 0:
-    left -= (left % 1)
-    left += 1
-time += int(left)
-print(time)
+a, b, v = map(int, input().split())
+num = (v-a)/(a-b)
+if num%1 != 0:
+    print(int(num)+2)
+else:
+    print(int(num)+1)
